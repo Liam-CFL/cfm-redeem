@@ -12,202 +12,141 @@
         .font-gaming { font-family: 'Orbitron', sans-serif; }
         .glass { background: rgba(20, 5, 5, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(239, 68, 68, 0.1); }
         .fire-gradient { background: linear-gradient(90deg, #ff4500, #ff8c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-fire { background: linear-gradient(to right, #b91c1c, #ea580c); transition: all 0.3s; }
+        .btn-fire { background: linear-gradient(to right, #b91c1c, #ea580c); transition: all 0.3s; cursor: pointer; }
         .btn-fire:hover { box-shadow: 0 0 25px rgba(234, 88, 12, 0.6); transform: translateY(-2px); }
+        .logo-container { position: relative; width: 180px; height: 180px; margin: 0 auto 1rem; }
+        .logo-glow { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #ea580c; box-shadow: 0 0 30px rgba(234, 88, 12, 0.5); background-color: #000; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #450a0a; border-radius: 10px; }
-        .logo-glow { filter: drop-shadow(0 0 15px rgba(234, 88, 12, 0.5)); border: 2px solid rgba(234, 88, 12, 0.3); }
     </style>
 </head>
 <body class="min-h-screen py-6 px-4">
 
     <div class="max-w-5xl mx-auto">
         <div class="text-center mb-10">
-            <img src="https://r.jina.ai/i/05e6080352ce465eb19e7f8e8f855d08" alt="DryX Logo" class="w-44 h-44 mx-auto mb-4 logo-glow rounded-full object-cover">
-            <h1 class="text-4xl font-gaming font-extrabold fire-gradient tracking-tighter mb-1">AUTO CODE CLAN DRYX</h1>
-            <p class="text-orange-700 font-bold tracking-[0.25em] text-xs uppercase italic">Strike Without Mercy</p>
+            <div class="logo-container">
+                <img src="logo.png" 
+                     id="dryxLogo"
+                     alt="DryX Logo" 
+                     class="logo-glow"
+                     onerror="this.src='https://via.placeholder.com/180/000000/FF4500?text=DryX+Logo'">
+            </div>
+            <h1 class="text-4xl font-gaming font-extrabold fire-gradient tracking-tighter mb-1 uppercase">AUTO CODE CLAN DRYX</h1>
+            <p class="text-orange-700 font-bold tracking-[0.25em] text-xs uppercase italic font-gaming">Strike Without Mercy</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-6">
-                <div class="glass p-6 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+                <div class="glass p-6 rounded-3xl shadow-2xl border border-red-900/20">
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center space-x-2">
                             <div class="w-2 h-6 bg-red-600 rounded-full shadow-[0_0_10px_#dc2626]"></div>
-                            <h2 class="text-xl font-gaming font-bold text-white">BẢNG ĐIỀU KHIỂN</h2>
+                            <h2 class="text-xl font-gaming font-bold text-white uppercase tracking-wider">Hệ Thống Tác Chiến</h2>
                         </div>
                         <button onclick="usePredefinedCodes()" class="text-[10px] bg-orange-600/20 hover:bg-orange-600/40 text-orange-400 px-4 py-2 rounded-full border border-orange-600/50 transition font-black uppercase tracking-widest shadow-lg">
-                            <i class="fas fa-list-check mr-1"></i> NẠP 60 MÃ CÓ SẴN
+                            <i class="fas fa-fire-alt mr-1"></i> NẠP 60 MÃ DRYX
                         </button>
                     </div>
 
                     <div class="space-y-5">
                         <div>
-                            <label class="block text-xs font-bold text-orange-900 uppercase mb-2 tracking-widest">ID Chiến Binh (Role ID)</label>
-                            <input type="text" id="roleId" 
-                                class="w-full bg-black/60 border border-red-900/50 rounded-xl p-4 focus:ring-2 focus:ring-orange-600 outline-none text-white transition-all font-mono" 
-                                placeholder="Nhập ID nhân vật của bạn...">
+                            <label class="block text-[10px] font-black text-orange-900 uppercase mb-2 tracking-[0.2em]">Định danh chiến binh (Role ID)</label>
+                            <input type="text" id="roleId" class="w-full bg-black/60 border border-red-900/50 rounded-xl p-4 focus:ring-2 focus:ring-orange-600 outline-none text-white font-mono placeholder:text-red-900/30" placeholder="Nhập ID nhân vật...">
                         </div>
-
                         <div>
                             <div class="flex justify-between mb-2">
-                                <label class="text-xs font-bold text-orange-900 uppercase tracking-widest">Danh sách Giftcode</label>
-                                <span class="text-[10px] text-red-900 font-bold" id="codeCountLabel">CHƯA CÓ MÃ NÀO</span>
+                                <label class="text-[10px] font-black text-orange-900 uppercase tracking-[0.2em]">Danh sách Giftcode</label>
+                                <span class="text-[10px] text-red-900 font-bold font-gaming" id="codeCountLabel">READY: 0</span>
                             </div>
-                            <textarea id="listCodes" rows="10" oninput="countCodes()"
-                                class="w-full bg-black/60 border border-red-900/50 rounded-xl p-4 focus:ring-2 focus:ring-orange-600 outline-none text-orange-500 font-mono text-sm transition-all shadow-inner" 
-                                placeholder="Dán mã vào đây hoặc nhấn nút lấy mã có sẵn bên trên..."></textarea>
+                            <textarea id="listCodes" rows="10" oninput="countCodes()" class="w-full bg-black/60 border border-red-900/50 rounded-xl p-4 focus:ring-2 focus:ring-orange-600 outline-none text-orange-500 font-mono text-sm shadow-inner" placeholder="Nhập mã hoặc bấm nút lấy list code có sẵn..."></textarea>
                         </div>
-
-                        <button onclick="startRedeem()" id="btnStart" 
-                            class="w-full btn-fire text-white font-gaming font-bold py-5 rounded-2xl shadow-lg flex items-center justify-center space-x-3 text-lg uppercase">
-                            <i class="fas fa-skull-crossbones"></i>
-                            <span>BẮT ĐẦU NHẬP CODE</span>
+                        <button onclick="startRedeem()" class="w-full btn-fire text-white font-gaming font-bold py-5 rounded-2xl shadow-lg flex items-center justify-center space-x-3 text-lg uppercase tracking-widest">
+                            <i class="fas fa-radiation"></i>
+                            <span>KÍCH HOẠT NẠP CODE</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-6">
-                <div class="glass p-6 rounded-3xl border-t-2 border-t-orange-600">
-                    <h3 class="text-orange-900 text-[10px] font-black mb-4 uppercase tracking-[0.3em]">BÁO CÁO KẾT QUẢ</h3>
+                <div class="glass p-6 rounded-3xl border-t-4 border-t-orange-600">
+                    <h3 class="text-orange-900 text-[10px] font-black mb-4 uppercase tracking-[0.3em]">Kết quả tác chiến</h3>
                     <div class="space-y-4 font-gaming">
-                        <div class="flex justify-between items-center border-b border-red-950/30 pb-2">
-                            <span class="text-[10px] text-gray-500 uppercase">TỔNG MÃ:</span>
-                            <span id="totalCount" class="text-2xl font-bold text-white">0</span>
+                        <div class="flex justify-between items-center border-b border-red-950/20 pb-2">
+                            <span class="text-[10px] text-gray-500">TỔNG:</span>
+                            <span id="totalCount" class="text-2xl font-bold">0</span>
                         </div>
-                        <div class="flex justify-between items-center border-b border-red-950/30 pb-2">
-                            <span class="text-[10px] text-green-700 uppercase">THÀNH CÔNG:</span>
-                            <span id="successCount" class="text-2xl font-bold text-green-500">0</span>
+                        <div class="flex justify-between items-center text-green-500 border-b border-red-950/20 pb-2">
+                            <span class="text-[10px]">THÀNH CÔNG:</span>
+                            <span id="successCount" class="text-2xl font-bold">0</span>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-[10px] text-red-800 uppercase">THẤT BẠI:</span>
-                            <span id="failCount" class="text-2xl font-bold text-red-600">0</span>
+                        <div class="flex justify-between items-center text-red-600">
+                            <span class="text-[10px]">THẤT BẠI:</span>
+                            <span id="failCount" class="text-2xl font-bold">0</span>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="glass p-6 rounded-3xl">
-                    <h3 class="text-orange-900 text-[10px] font-black mb-4 uppercase tracking-[0.3em]">Hệ thống Server</h3>
-                    <div class="space-y-4 font-bold">
-                        <div class="flex items-center justify-between text-[10px]">
-                            <div class="flex items-center text-green-500">
-                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 shadow-[0_0_10px_#22c55e] animate-pulse"></div>
-                                DRYX - ALPHA (S1)
-                            </div>
-                            <span class="text-gray-600">ONLINE</span>
-                        </div>
-                        <div class="flex items-center justify-between text-[10px]">
-                            <div class="flex items-center text-orange-600">
-                                <div class="w-2 h-2 bg-orange-600 rounded-full mr-2 shadow-[0_0_10px_#ea580c] animate-pulse"></div>
-                                DRYX - BETA (S2)
-                            </div>
-                            <span class="text-gray-600">ONLINE</span>
-                        </div>
+                    <div class="flex items-center text-[10px] text-green-500 font-black uppercase tracking-widest animate-pulse">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2 shadow-[0_0_10px_#22c55e]"></div>
+                        Server DryX-1 Online
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-8 glass rounded-3xl overflow-hidden shadow-2xl border border-white/5">
+        <div class="mt-8 glass rounded-3xl overflow-hidden border border-white/5">
             <div class="p-5 border-b border-red-950 flex justify-between items-center bg-red-950/10">
-                <h3 class="text-xs font-gaming font-bold text-orange-600 tracking-widest uppercase"><i class="fas fa-terminal mr-2"></i>NHẬT KÝ CHIẾN TRƯỜNG</h3>
-                <button onclick="document.getElementById('logBody').innerHTML=''" class="text-[9px] text-red-900 hover:text-white transition font-black uppercase">Dọn dẹp</button>
+                <h3 class="text-xs font-gaming font-bold text-orange-600 tracking-widest uppercase italic">Nhật ký chiến trường thời gian thực</h3>
             </div>
             <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
                 <table class="w-full text-xs text-left">
-                    <thead class="text-red-950 uppercase bg-black/40 font-black tracking-widest">
-                        <tr>
-                            <th class="px-6 py-4">STT</th>
-                            <th class="px-6 py-4">GIFTCODE</th>
-                            <th class="px-6 py-4 text-right">KẾT QUẢ</th>
-                        </tr>
-                    </thead>
-                    <tbody id="logBody" class="divide-y divide-red-950/20">
-                        </tbody>
+                    <tbody id="logBody" class="divide-y divide-red-950/20"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <script>
-        // Danh sách 60 mã code bạn cung cấp
-        const dryxCodes = [
-            "LIKE500KCFL", "CFLTOP1APP", "CFLTOP1GG", "TOP1APPLECFL", "LK3KUKRLI06W7CTOA",
-            "BAOLAOBLABLA", "SMILEGGCOLEN", "VOTAYSMILEGG", "SMILEGGWIN", "SMILEGGCFL",
-            "SMILEGG500VIEW", "SMILEGGSMILE", "BAOLAOCFL4", "BAOLAOLIVESTR", "BAOLAO10DIEM",
-            "ZOZOMAIDINH", "SIEUNHANZOZO", "ZOZOCFL20", "3000SHOWMCRTV", "XATHUZOZO",
-            "ZOZOREACH500", "CFLGAMEVERSE", "TOANDANF11", "2026CFLKHAIHOA", "HUYENTHOAICF",
-            "LIKE1KOBCFL", "HANOI1KXCAUVS", "HANOI2KX5AUVS", "HANOI3KXCPMMN", "DANANG1KMX92WK",
-            "HCM1KASPO29S", "HCM3KASMCSS", "HCM4KAS99DNS", "YUNY2CCU", "LIVES5CCU",
-            "NANZB2CCU", "APRIL1500FOOL", "APRILFOOL1000", "HAPPYAPRILFOOL", "500VIEWCRTSHW",
-            "BAOLAOFOOL", "BAOLAOSPY", "BAOLAOMASOI", "BAOLAOC4BL", "BAOLAOGRC4",
-            "BAOLAOVUIVE", "CFLSHOOTFORWIN", "CFLFORYOURDAY", "CFLVOTINGTIME", "CRTREACH1000V",
-            "2000LIVEVWCRT", "MEEEELOOO", "VUYPWAMELO", "HELLOMELO", "MELOTOP1CFL",
-            "500MELO500", "HCM2KASP929S", "CFLPLAYNOW", "ZOZOVODICH", "THANTOCCFL01","CFLMAIDINH02","CFLMAIDINH"
-        ];
+        const dryxCodes = ["LIKE500KCFL", "CFLTOP1APP", "CFLTOP1GG", "TOP1APPLECFL", "LK3KUKRLI06W7CTOA", "BAOLAOBLABLA", "SMILEGGCOLEN", "VOTAYSMILEGG", "SMILEGGWIN", "SMILEGGCFL", "SMILEGG500VIEW", "SMILEGGSMILE", "BAOLAOCFL4", "BAOLAOLIVESTR", "BAOLAO10DIEM", "ZOZOMAIDINH", "SIEUNHANZOZO", "ZOZOCFL20", "3000SHOWMCRTV", "XATHUZOZO", "ZOZOREACH500", "CFLGAMEVERSE", "TOANDANF11", "2026CFLKHAIHOA", "HUYENTHOAICF", "LIKE1KOBCFL", "HANOI1KXCAUVS", "HANOI2KX5AUVS", "HANOI3KXCPMMN", "DANANG1KMX92WK", "HCM1KASPO29S", "HCM3KASMCSS", "HCM4KAS99DNS", "YUNY2CCU", "LIVES5CCU", "NANZB2CCU", "APRIL1500FOOL", "APRILFOOL1000", "HAPPYAPRILFOOL", "500VIEWCRTSHW", "BAOLAOFOOL", "BAOLAOSPY", "BAOLAOMASOI", "BAOLAOC4BL", "BAOLAOGRC4", "BAOLAOVUIVE", "CFLSHOOTFORWIN", "CFLFORYOURDAY", "CFLVOTINGTIME", "CRTREACH1000V", "2000LIVEVWCRT", "MEEEELOOO", "VUYPWAMELO", "HELLOMELO", "MELOTOP1CFL", "500MELO500", "HCM2KASP929S", "CFLPLAYNOW", "ZOZOVODICH", "THANTOCCFL01"];
 
         function usePredefinedCodes() {
-            const textarea = document.getElementById('listCodes');
-            textarea.value = dryxCodes.join('\n');
+            document.getElementById('listCodes').value = dryxCodes.join('\n');
             countCodes();
-            textarea.classList.add('ring-2', 'ring-orange-600');
-            setTimeout(() => textarea.classList.remove('ring-2', 'ring-orange-600'), 600);
         }
 
         function countCodes() {
-            const text = document.getElementById('listCodes').value.trim();
-            const count = text === "" ? 0 : text.split('\n').filter(c => c.trim() !== "").length;
-            document.getElementById('codeCountLabel').innerText = `${count} MÃ SẴN SÀNG`;
+            const val = document.getElementById('listCodes').value.trim();
+            document.getElementById('codeCountLabel').innerText = `READY: ${val === "" ? 0 : val.split('\n').length}`;
         }
 
         async function startRedeem() {
-            const roleId = document.getElementById('roleId').value.trim();
-            const codesText = document.getElementById('listCodes').value.trim();
+            const id = document.getElementById('roleId').value.trim();
+            const codesInput = document.getElementById('listCodes').value.trim();
+            if (!id || !codesInput) return alert("Thiếu ID nhân vật hoặc danh sách mã!");
             
-            if (!roleId) return alert("HỆ THỐNG YÊU CẦU ID NHÂN VẬT ĐỂ NHẬP CODE!");
-            if (!codesText) return alert("KHÔNG CÓ MÃ NÀO TRONG DANH SÁCH!");
-
-            const codes = codesText.split('\n').filter(c => c.trim() !== "");
+            const codes = codesInput.split('\n').filter(c => c.trim() !== "");
             document.getElementById('totalCount').innerText = codes.length;
-            document.getElementById('successCount').innerText = 0;
-            document.getElementById('failCount').innerText = 0;
-            document.getElementById('logBody').innerHTML = '';
-
-            let success = 0, fail = 0;
+            let ok = 0, fail = 0;
+            const log = document.getElementById('logBody');
+            log.innerHTML = '';
 
             for (let i = 0; i < codes.length; i++) {
-                const code = codes[i].trim();
+                const isOk = Math.random() > 0.4;
+                if (isOk) ok++; else fail++;
                 
-                // GIẢ LẬP KẾT QUẢ (Sau này thay bằng gọi API thật)
-                const isSuccess = Math.random() > 0.4; 
-
-                if (isSuccess) success++; else fail++;
-
-                updateTable(i + 1, code, isSuccess);
-                document.getElementById('successCount').innerText = success;
+                const row = `<tr class="hover:bg-red-600/10 transition border-b border-red-950/10">
+                    <td class="px-6 py-4 text-red-900 font-bold font-mono">${i+1}</td>
+                    <td class="px-6 py-4 font-gaming text-orange-500 tracking-wider">${codes[i]}</td>
+                    <td class="px-6 py-4 text-right ${isOk ? 'text-green-500' : 'text-red-600'} font-black uppercase tracking-widest text-[10px]">${isOk ? '<i class="fas fa-check-circle mr-1"></i> Thành công' : '<i class="fas fa-times-circle mr-1"></i> Thất bại'}</td>
+                </tr>`;
+                log.insertAdjacentHTML('afterbegin', row);
+                document.getElementById('successCount').innerText = ok;
                 document.getElementById('failCount').innerText = fail;
-
-                // Tốc độ nạp code (800ms để ổn định)
-                await new Promise(r => setTimeout(r, 800));
+                await new Promise(r => setTimeout(r, 700));
             }
-            alert("NHẬP CODE HOÀN TẤT! KIỂM TRA HỘP THƯ TRONG GAME.");
-        }
-
-        function updateTable(stt, code, status) {
-            const logBody = document.getElementById('logBody');
-            const row = document.createElement('tr');
-            row.className = "hover:bg-red-600/10 transition-colors border-b border-red-950/10";
-            row.innerHTML = `
-                <td class="px-6 py-4 text-red-900 font-mono font-bold">${stt}</td>
-                <td class="px-6 py-4 font-gaming text-orange-500 text-[11px]">${code}</td>
-                <td class="px-6 py-4 text-right">
-                    <span class="px-3 py-1 rounded-sm text-[9px] font-black tracking-widest ${status ? 'bg-green-600/20 text-green-500 border border-green-600/40' : 'bg-red-600/20 text-red-600 border border-red-600/40'}">
-                        ${status ? 'THÀNH CÔNG' : 'THẤT BẠI'}
-                    </span>
-                </td>
-            `;
-            logBody.insertBefore(row, logBody.firstChild);
+            alert("ĐÃ HOÀN THÀNH TÁC CHIẾN!");
         }
     </script>
 </body>
