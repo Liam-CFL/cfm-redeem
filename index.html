@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFM Auto Redeem - Hệ Thống Nạp Code Tự Động</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lexend', sans-serif; background-color: #0b0f1a; color: #cbd5e1; }
+        .glass { background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(90deg, #3b82f6, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen py-6 px-4">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold gradient-text tracking-tight mb-2">CFM AUTO REDEEM</h1>
+            <p class="text-gray-500 font-light">Công cụ hỗ trợ nhập Giftcode CrossFire Legends nhanh chóng</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Cột trái: Form nhập -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="glass p-6 rounded-3xl shadow-2xl">
+                    <div class="flex items-center mb-6 space-x-2">
+                        <div class="w-2 h-6 bg-blue-500 rounded-full"></div>
+                        <h2 class="text-xl font-semibold text-white">Cấu hình nạp code</h2>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-2">ID Nhân vật (Role ID)</label>
+                            <input type="text" id="roleId" 
+                                class="w-full bg-black/40 border border-gray-700 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none text-white transition-all" 
+                                placeholder="Nhập ID nhân vật của bạn...">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <label class="text-sm font-medium text-gray-400">Danh sách Giftcode</label>
+                                <span class="text-xs text-gray-500 italic">Mỗi code nằm trên 1 dòng</span>
+                            </div>
+                            <textarea id="listCodes" rows="10" 
+                                class="w-full bg-black/40 border border-gray-700 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 outline-none text-blue-400 font-mono text-sm transition-all" 
+                                placeholder="CODE1&#10;CODE2&#10;CODE3..."></textarea>
+                        </div>
+
+                        <button onclick="startRedeem()" id="btnStart" 
+                            class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold py-4 rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center space-x-2">
+                            <i class="fas fa-bolt"></i>
+                            <span>BẮT ĐẦU TIẾN TRÌNH</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Thống kê & Server -->
+            <div class="space-y-6">
+                <!-- Thống kê -->
+                <div class="glass p-6 rounded-3xl">
+                    <h3 class="text-gray-400 text-sm font-semibold mb-4 uppercase tracking-widest">Trạng thái hiện tại</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm">Tổng số mã:</span>
+                            <span id="totalCount" class="text-xl font-bold text-white">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-green-400">Thành công:</span>
+                            <span id="successCount" class="text-xl font-bold text-green-500">0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-red-400">Thất bại:</span>
+                            <span id="failCount" class="text-xl font-bold text-red-500">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Server Info -->
+                <div class="glass p-6 rounded-3xl">
+                    <h3 class="text-gray-400 text-sm font-semibold mb-4 uppercase tracking-widest">Hệ thống máy chủ</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-xs">
+                            <div class="flex items-center">
+                                <span class="relative flex h-2 w-2 mr-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                </span>
+                                Server S1 (Hà Nội)
+                            </div>
+                            <span class="text-green-500">Ổn định</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <div class="flex items-center text-gray-500">
+                                <div class="w-2 h-2 bg-gray-600 rounded-full mr-2"></div>
+                                Server S2 (Sài Gòn)
+                            </div>
+                            <span>Bảo trì</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng nhật ký -->
+        <div class="mt-8 glass rounded-3xl overflow-hidden shadow-2xl">
+            <div class="p-5 border-b border-gray-800 flex justify-between items-center bg-white/5">
+                <h3 class="font-semibold text-white italic"><i class="fas fa-history mr-2"></i>Lịch sử nạp code thời gian thực</h3>
+                <button onclick="document.getElementById('logBody').innerHTML=''" class="text-xs text-gray-500 hover:text-white transition">XÓA TẤT CẢ</button>
+            </div>
+            <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+                <table class="w-full text-sm text-left">
+                    <thead class="text-xs text-gray-400 uppercase bg-black/20">
+                        <tr>
+                            <th class="px-6 py-4">STT</th>
+                            <th class="px-6 py-4 text-blue-400">Mã Giftcode</th>
+                            <th class="px-6 py-4">Kết quả phản hồi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logBody" class="divide-y divide-gray-800">
+                        <!-- Nội dung nạp code sẽ xuất hiện ở đây -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function startRedeem() {
+            const roleId = document.getElementById('roleId').value.trim();
+            const codesText = document.getElementById('listCodes').value.trim();
+            
+            if (!roleId) return alert("Bạn chưa nhập ID nhân vật!");
+            if (!codesText) return alert("Bạn chưa nhập danh sách code!");
+
+            const codes = codesText.split('\n').filter(c => c.trim() !== "");
+            const total = codes.length;
+            
+            document.getElementById('totalCount').innerText = total;
+            document.getElementById('successCount').innerText = 0;
+            document.getElementById('failCount').innerText = 0;
+            document.getElementById('logBody').innerHTML = '';
+
+            let success = 0;
+            let fail = 0;
+
+            for (let i = 0; i < total; i++) {
+                const currentCode = codes[i].trim();
+                
+                // --- GIẢ LẬP XỬ LÝ (Thay bằng fetch gọi API thật của bạn tại đây) ---
+                const isSuccess = Math.random() > 0.4; 
+                // -------------------------------------------------------------------
+
+                if (isSuccess) success++; else fail++;
+
+                // Cập nhật giao diện
+                updateTable(i + 1, currentCode, isSuccess);
+                document.getElementById('successCount').innerText = success;
+                document.getElementById('failCount').innerText = fail;
+
+                // Nghỉ 800ms để không bị khóa IP
+                await new Promise(r => setTimeout(r, 800));
+            }
+            alert("Đã hoàn thành nạp danh sách code!");
+        }
+
+        function updateTable(stt, code, status) {
+            const logBody = document.getElementById('logBody');
+            const row = document.createElement('tr');
+            row.className = "hover:bg-white/5 transition-colors animate-pulse";
+            row.innerHTML = `
+                <td class="px-6 py-4 font-medium text-gray-500">${stt}</td>
+                <td class="px-6 py-4 font-mono text-blue-300 font-bold">${code}</td>
+                <td class="px-6 py-4 font-semibold ${status ? 'text-green-500' : 'text-red-500'}">
+                    ${status ? '<i class="fas fa-check-circle mr-1"></i> Thành công' : '<i class="fas fa-times-circle mr-1"></i> Thất bại/Đã dùng'}
+                </td>
+            `;
+            logBody.insertBefore(row, logBody.firstChild);
+        }
+    </script>
+</body>
+</html>
