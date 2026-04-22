@@ -132,9 +132,11 @@
             const codesInput = document.getElementById('listCodes').value.trim();
             if (!id || !codesInput) return alert("Nhập ID và Code trước ní ơi!");
 
-            const codes = codesInput.split('\n').filter(c => c.trim() !== "");
+            const codes = codesInput.split('\n').map(c => c.trim()).filter(c => c !== "");
             document.getElementById('totalCount').innerText = codes.length;
-            let ok = 0, fail = 0;
+            
+            let ok = 0;
+            let fail = 0;
             const log = document.getElementById('logBody');
             log.innerHTML = '';
             
@@ -142,37 +144,42 @@
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> <span>ĐANG TẤN CÔNG...</span>';
 
-            // ĐỊA CHỈ SERVER CỦA NÍ
+            // ĐỊA CHỈ SERVER CHUẨN
             const PROXY_URL = "https://dryx-api.onrender.com/api/dryx-proxy";
 
             for (let i = 0; i < codes.length; i++) {
-                const code = codes[i].trim();
+                const code = codes[i];
                 try {
                     const res = await fetch(PROXY_URL, {
                         method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ roleId: id, code: code })
                     });
+                    
                     const data = await res.json();
 
-                    if (data.status === "success" || data.message?.toLowerCase().includes("thành công")) {
+                    if (data.status === "success" || (data.message && data.message.toLowerCase().includes("thành công"))) {
                         ok++;
-                        addLogRow(i+1, code, true, data.message || "THÀNH CÔNG");
+                        addLogRow(i + 1, code, true, data.message || "THÀNH CÔNG");
                     } else {
                         fail++;
-                        addLogRow(i+1, code, false, data.message || "THẤT BẠI");
+                        addLogRow(i + 1, code, false, data.message || "THẤT BẠI");
                     }
                 } catch (e) {
                     fail++;
-                    addLogRow(i+1, code, false, "LỖI KẾT NỐI (ĐỢI SERVER TÍ)");
+                    addLogRow(i + 1, code, false, "SERVER ĐANG NGỦ - ĐỢI TÍ");
                 }
+                
                 document.getElementById('successCount').innerText = ok;
                 document.getElementById('failCount').innerText = fail;
+                
+                // Nghỉ 1.2 giây để tránh bị nhà phát hành khóa
                 await new Promise(r => setTimeout(r, 1200));
             }
+            
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-radiation"></i> <span>KÍCH HOẠT TÁC CHIẾN</span>';
-            alert("ĐÃ XONG!");
+            alert("HOÀN THÀNH CHIẾN DỊCH!");
         }
 
         function addLogRow(stt, code, isOk, msg) {
