@@ -14,19 +14,32 @@
         .fire-gradient { background: linear-gradient(90deg, #ff4500, #ff8c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-fire { background: linear-gradient(to right, #b91c1c, #ea580c); transition: all 0.3s; cursor: pointer; border: none; }
         .btn-fire:hover { box-shadow: 0 0 25px rgba(234, 88, 12, 0.6); transform: translateY(-2px); }
-        .logo-glow { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 3px solid #ea580c; box-shadow: 0 0 30px rgba(234, 88, 12, 0.5); margin: 0 auto 1.5rem; display: block; }
+        .logo-glow { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 3px solid #ea580c; box-shadow: 0 0 30px rgba(234, 88, 12, 0.5); margin: 0 auto 1rem; display: block; }
+        .recruit-box { border: 1px dashed #ea580c; background: rgba(234, 88, 12, 0.05); }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #450a0a; border-radius: 10px; }
-        .status-badge { padding: 4px 10px; border-radius: 4px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
     </style>
 </head>
 <body class="min-h-screen py-8 px-4">
 
     <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-10">
+        <div class="text-center mb-8">
             <img src="logo.png" alt="DryX Logo" class="logo-glow" onerror="this.src='https://r.jina.ai/i/05e6080352ce465eb19e7f8e8f855d08'">
             <h1 class="text-4xl font-gaming font-extrabold fire-gradient tracking-tighter mb-1 uppercase">AUTO CODE CLAN DRYX</h1>
-            <p class="text-orange-700 font-bold tracking-[0.25em] text-xs uppercase italic font-gaming">Strike Without Mercy</p>
+            <p class="text-orange-700 font-bold tracking-[0.25em] text-xs uppercase italic font-gaming mb-6">Strike Without Mercy</p>
+
+            <div class="recruit-box max-w-2xl mx-auto p-4 rounded-2xl border-2 animate-pulse mb-8">
+                <h3 class="text-white font-gaming text-sm font-bold mb-2"><i class="fas fa-bullhorn mr-2 text-orange-500"></i>THÔNG CÁO TUYỂN QUÂN</h3>
+                <p class="text-gray-300 text-xs mb-3">Clan DryX đang chiêu mộ các chiến binh tài năng. Anh em chưa có bến đỗ hãy gia nhập ngay!</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://www.facebook.com/share/1LLUaM23hx/" target="_blank" class="bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 px-4 py-2 rounded-lg border border-blue-600/50 transition text-[10px] font-bold">
+                        <i class="fab fa-facebook mr-1"></i> LIÊN HỆ ADMIN
+                    </a>
+                    <a href="https://zalo.me/0964149813" target="_blank" class="bg-green-600/20 hover:bg-green-600/40 text-green-400 px-4 py-2 rounded-lg border border-green-600/50 transition text-[10px] font-bold">
+                        <i class="fas fa-comment-dots mr-1"></i> ZALO: 0964149813
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -52,7 +65,7 @@
                                 <label class="text-[10px] font-black text-orange-900 uppercase tracking-[0.2em]">Danh Sách Giftcode</label>
                                 <span class="text-[10px] text-red-900 font-bold font-gaming" id="codeCountLabel">SẴN SÀNG: 0</span>
                             </div>
-                            <textarea id="listCodes" rows="10" oninput="countCodes()" class="w-full bg-black/60 border border-red-900/50 rounded-xl p-4 focus:ring-2 focus:ring-orange-600 outline-none text-orange-500 font-mono text-sm shadow-inner" placeholder="Bấm nút màu cam bên trên để nạp list code..."></textarea>
+                            <textarea id="listCodes" rows="8" oninput="countCodes()" class="w-full bg-black/60 border border-red-900/50 rounded-xl p-4 focus:ring-2 focus:ring-orange-600 outline-none text-orange-500 font-mono text-sm shadow-inner" placeholder="Bấm nút màu cam bên trên để nạp list code..."></textarea>
                         </div>
                         <button onclick="startRedeem()" id="btnStart" class="w-full btn-fire text-white font-gaming font-bold py-5 rounded-2xl shadow-lg flex items-center justify-center space-x-3 text-lg uppercase tracking-widest">
                             <i class="fas fa-radiation"></i>
@@ -66,9 +79,9 @@
                 <div class="glass p-6 rounded-3xl border-t-4 border-t-orange-600">
                     <h3 class="text-orange-900 text-[10px] font-black mb-4 uppercase tracking-[0.3em]">Kết Quả Nạp</h3>
                     <div class="space-y-4 font-gaming">
-                        <div class="flex justify-between items-center border-b border-red-950/20 pb-2">
-                            <span class="text-[10px] text-gray-500">TỔNG:</span>
-                            <span id="totalCount" class="text-2xl font-bold">0</span>
+                        <div class="flex justify-between items-center border-b border-red-950/20 pb-2 text-gray-500">
+                            <span class="text-[10px]">TỔNG:</span>
+                            <span id="totalCount" class="text-2xl font-bold text-white">0</span>
                         </div>
                         <div class="flex justify-between items-center text-green-500 border-b border-red-950/20 pb-2">
                             <span class="text-[10px]">THÀNH CÔNG:</span>
@@ -80,10 +93,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="glass p-6 rounded-3xl">
-                    <div class="flex items-center text-[10px] text-green-500 font-black uppercase tracking-widest animate-pulse">
+                <div class="glass p-4 rounded-3xl text-center">
+                    <p class="text-[9px] text-red-900 font-black uppercase tracking-widest mb-1">Status</p>
+                    <div class="flex items-center justify-center text-[10px] text-green-500 font-black uppercase tracking-widest">
                         <div class="w-2 h-2 bg-green-500 rounded-full mr-2 shadow-[0_0_10px_#22c55e]"></div>
-                        Server DryX-API Online
+                        DryX-API Online
                     </div>
                 </div>
             </div>
@@ -91,12 +105,11 @@
 
         <div class="mt-8 glass rounded-3xl overflow-hidden border border-white/5 shadow-2xl">
             <div class="p-5 border-b border-red-950 flex justify-between items-center bg-red-950/10">
-                <h3 class="text-xs font-gaming font-bold text-orange-600 tracking-widest uppercase italic">Nhật ký chiến trường (Real-time)</h3>
+                <h3 class="text-xs font-gaming font-bold text-orange-600 tracking-widest uppercase italic text-center w-full">Nhật ký chiến trường thời gian thực</h3>
             </div>
-            <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
-                <table class="w-full text-xs text-left">
-                    <tbody id="logBody" class="divide-y divide-red-950/20">
-                        </tbody>
+            <div class="overflow-x-auto max-h-[300px] overflow-y-auto">
+                <table class="w-full text-xs text-left text-gray-400">
+                    <tbody id="logBody" class="divide-y divide-red-950/20"></tbody>
                 </table>
             </div>
         </div>
@@ -118,7 +131,7 @@
         async function startRedeem() {
             const id = document.getElementById('roleId').value.trim();
             const codesInput = document.getElementById('listCodes').value.trim();
-            if (!id || !codesInput) return alert("Hệ thống: Nhập ID nhân vật và Code!");
+            if (!id || !codesInput) return alert("Cảnh báo: Nhập ID nhân vật và danh sách mã code!");
 
             const codes = codesInput.split('\n').filter(c => c.trim() !== "");
             document.getElementById('totalCount').innerText = codes.length;
@@ -151,7 +164,7 @@
                     }
                 } catch (e) {
                     fail++;
-                    addLogRow(i+1, code, false, "LỖI SERVER (ĐANG THỨC GIẬC)");
+                    addLogRow(i+1, code, false, "LỖI SERVER (RENDER ĐANG NGỦ)");
                 }
                 document.getElementById('successCount').innerText = ok;
                 document.getElementById('failCount').innerText = fail;
@@ -159,16 +172,15 @@
             }
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-radiation"></i> <span>KÍCH HOẠT TÁC CHIẾN</span>';
-            alert("TÁC CHIẾN HOÀN TẤT!");
+            alert("CHIẾN DỊCH HOÀN TẤT!");
         }
 
         function addLogRow(stt, code, isOk, msg) {
             const row = `<tr class="border-b border-red-950/10 hover:bg-red-600/5 transition">
-                <td class="px-6 py-4 font-mono text-gray-500">${stt}</td>
-                <td class="px-6 py-4 text-orange-500 font-gaming text-[11px]">${code}</td>
-                <td class="px-6 py-4 text-right font-black uppercase text-[10px] ${isOk ? 'text-green-500' : 'text-red-600'}">
-                    ${isOk ? '<i class="fas fa-check-circle mr-1"></i>' : '<i class="fas fa-times-circle mr-1"></i>'}
-                    ${msg}
+                <td class="px-6 py-3 font-mono text-gray-600">${stt}</td>
+                <td class="px-6 py-3 text-orange-500 font-gaming text-[10px] tracking-widest">${code}</td>
+                <td class="px-6 py-3 text-right font-black uppercase text-[10px] ${isOk ? 'text-green-500' : 'text-red-600'}">
+                    ${isOk ? 'OK' : 'FAIL'} - ${msg}
                 </td>
             </tr>`;
             document.getElementById('logBody').insertAdjacentHTML('afterbegin', row);
